@@ -1,7 +1,9 @@
+import { DefaultWordle_page } from './pages/DefaultWordle_page';
+
 function App() {
   return (
     <>
-      <div className="text-stone-50">padalustro</div>
+      <DefaultWordle_page></DefaultWordle_page>
     </>
   );
 }
