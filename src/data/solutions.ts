@@ -213,7 +213,7 @@ const SOLUTIONS = [
   },
   {
     id: 54,
-    word: 'deaaa',
+    word: 'ndeah',
   },
   {
     id: 55,
@@ -405,7 +405,7 @@ const SOLUTIONS = [
   },
   {
     id: 102,
-    word: 'naupa',
+    word: 'ñaupa',
   },
   {
     id: 103,
@@ -413,11 +413,11 @@ const SOLUTIONS = [
   },
   {
     id: 104,
-    word: 'nunez',
+    word: 'nuñez',
   },
   {
     id: 105,
-    word: 'noqui',
+    word: 'ñoqui',
   },
   {
     id: 106,
@@ -638,6 +638,14 @@ const SOLUTIONS = [
   {
     id: 160,
     word: 'zurdo',
+  },
+  {
+    id: 161,
+    word: 'amaño',
+  },
+  {
+    id: 162,
+    word: 'remis',
   },
 ];
 

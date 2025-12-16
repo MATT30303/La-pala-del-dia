@@ -7,11 +7,11 @@ export const loadStats = (): Stats => {
   return data
     ? JSON.parse(data)
     : {
-        played: 182,
-        wins: 172,
-        currentStreak: 12,
-        bestStreak: 39,
-        distribution: [0, 6, 36, 65, 45, 20],
+        played: 0,
+        wins: 0,
+        currentStreak: 0,
+        bestStreak: 0,
+        distribution: [0, 0, 0, 0, 0, 0],
       };
 };
 

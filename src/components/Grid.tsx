@@ -14,7 +14,7 @@ export default function Grid({
   solution,
 }: GridProps) {
   return (
-    <div className=" h-[50vh] relative top-28">
+    <div className=" h-[50vh]">
       {guesses.map((g, i) => {
         if (turn === i) {
           return (

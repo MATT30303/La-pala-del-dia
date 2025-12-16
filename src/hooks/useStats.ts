@@ -11,15 +11,17 @@ export function useStats() {
 
   const registerWin = (tries: number) => {
     setStats((prev) => {
-      const next = { ...prev };
+      const distribution = [...prev.distribution];
 
-      next.played += 1;
-      next.wins += 1;
-      next.currentStreak += 1;
-      next.bestStreak = Math.max(next.bestStreak, next.currentStreak);
-      next.distribution[tries - 1] += 1;
+      distribution[tries - 1] += 1;
 
-      return next;
+      return {
+        played: prev.played + 1,
+        wins: prev.wins + 1,
+        currentStreak: prev.currentStreak + 1,
+        bestStreak: Math.max(prev.bestStreak, prev.currentStreak + 1),
+        distribution,
+      };
     });
   };
 
