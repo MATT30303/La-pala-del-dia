@@ -1,4 +1,4 @@
-import { DefaultWordle_page } from './pages/DefaultWordle_page';
+import { DefaultWordle_page } from './pages/Wordle_page';
 
 function App() {
   return (

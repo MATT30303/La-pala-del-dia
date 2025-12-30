@@ -1,20 +1,19 @@
-const STATS_KEY = 'wordle-stats';
+export function loadStats(key: string) {
+  const json = localStorage.getItem(key);
 
-import type { Stats } from '../types/stats';
+  if (!json) {
+    return {
+      played: 0,
+      wins: 0,
+      currentStreak: 0,
+      bestStreak: 0,
+      distribution: [0, 0, 0, 0, 0, 0],
+    };
+  }
 
-export const loadStats = (): Stats => {
-  const data = localStorage.getItem(STATS_KEY);
-  return data
-    ? JSON.parse(data)
-    : {
-        played: 0,
-        wins: 0,
-        currentStreak: 0,
-        bestStreak: 0,
-        distribution: [0, 0, 0, 0, 0, 0],
-      };
-};
+  return JSON.parse(json);
+}
 
-export const saveStats = (stats: Stats) => {
-  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-};
+export function saveStats(key: string, stats: any) {
+  localStorage.setItem(key, JSON.stringify(stats));
+}

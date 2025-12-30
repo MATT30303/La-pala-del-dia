@@ -1,29 +1,29 @@
 import Row from './Row';
 
-type GridProps = {
-  currentGuess: string;
-  guesses: any[];
-  turn: number;
-  solution: string;
-};
-
 export default function Grid({
   currentGuess,
   guesses,
   turn,
   solution,
-}: GridProps) {
+  invalidShake,
+}: {
+  currentGuess: string;
+  guesses: any[];
+  turn: number;
+  solution: string;
+  invalidShake: boolean;
+}) {
   return (
     <div className=" h-[50vh]">
-      {guesses.map((g, i) => {
-        if (turn === i) {
-          return (
-            <Row key={i} solution={solution} currentGuess={currentGuess} />
-          );
-        }
-
-        return <Row key={i} solution={solution} guess={g} />;
-      })}
+      {guesses.map((g, i) => (
+        <Row
+          key={i}
+          guess={g}
+          currentGuess={i === turn ? currentGuess : undefined}
+          solution={solution}
+          invalidShake={i === turn ? invalidShake : false}
+        />
+      ))}
     </div>
   );
 }

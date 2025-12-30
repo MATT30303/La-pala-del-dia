@@ -19,9 +19,9 @@ export default function Keypad({
   }, []);
 
   const green =
-    'bg-[#202B20] border border-[#37F906] text-stone-100 w-12 h-15 font-Manrope uppercase text-2xl font-regular  text-shadow-[0_4px_4px_rgb(0_0_0/_0.4)] flex justify-center items-center rounded-md m-1';
+    'bg-[#202B20] border border-[#43A047] text-stone-100 w-12 h-15 font-Manrope uppercase text-2xl font-regular  text-shadow-[0_4px_4px_rgb(0_0_0/_0.4)] flex justify-center items-center rounded-md m-1';
   const yellow =
-    'bg-[#2A2820] border border-[#FACA07] text-stone-100 w-12 h-15 font-Manrope uppercase text-2xl font-regular  text-shadow-[0_4px_4px_rgb(0_0_0/_0.4)] flex justify-center items-center rounded-md m-1';
+    'bg-[#2A2820] border border-[#e4a81d] text-stone-100 w-12 h-15 font-Manrope uppercase text-2xl font-regular  text-shadow-[0_4px_4px_rgb(0_0_0/_0.4)] flex justify-center items-center rounded-md m-1';
   const grey =
     'bg-[#232323] border border-[#7A7A7A] text-stone-100 w-12 h-15 font-Manrope uppercase text-2xl font-regular  text-shadow-[0_4px_4px_rgb(0_0_0/_0.4)] flex justify-center items-center rounded-md m-1';
   const normal =

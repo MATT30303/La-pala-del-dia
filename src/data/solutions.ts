@@ -21,7 +21,7 @@ const SOLUTIONS = [
   },
   {
     id: 6,
-    word: 'aijue',
+    word: 'asado',
   },
   {
     id: 7,
@@ -57,7 +57,7 @@ const SOLUTIONS = [
   },
   {
     id: 15,
-    word: 'boloh',
+    word: 'bocha',
   },
   {
     id: 16,
@@ -117,7 +117,7 @@ const SOLUTIONS = [
   },
   {
     id: 30,
-    word: 'bokee',
+    word: 'bocon',
   },
   {
     id: 31,
@@ -213,7 +213,7 @@ const SOLUTIONS = [
   },
   {
     id: 54,
-    word: 'ndeah',
+    word: 'denso',
   },
   {
     id: 55,
@@ -297,7 +297,7 @@ const SOLUTIONS = [
   },
   {
     id: 75,
-    word: 'holis',
+    word: 'guita',
   },
   {
     id: 76,
@@ -341,7 +341,7 @@ const SOLUTIONS = [
   },
   {
     id: 86,
-    word: 'maaal',
+    word: 'lompa',
   },
   {
     id: 87,
@@ -650,3 +650,4 @@ const SOLUTIONS = [
 ];
 
 export default SOLUTIONS;
+// fijate 6 aijue, 15 boloh, 30 bokee, 54 deaaa, 75 holis, 86 maaal

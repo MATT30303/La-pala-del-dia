@@ -1,20 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
 import useWordle from '../hooks/useWordle';
-import { Grid, Keypad, Modal, Header, Menu } from '.';
+import { Grid, Keypad, Modal, Header, Menu, Welcome } from '.';
 import { useStats } from '../hooks/useStats';
-export default function Wordle({ solution }: { solution: string }) {
-  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys } =
-    useWordle(solution);
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useGameState } from '../hooks/useGameState';
 
-  const { stats, registerLoss, registerWin } = useStats();
-
+export default function Wordle({
+  solution,
+  gamemode,
+  handleGameMode,
+}: {
+  solution: string;
+  gamemode: 'normal' | 'hard' | 'easy';
+  handleGameMode: (game: number) => void;
+}) {
+  const {
+    currentGuess,
+    handleKeyup,
+    guesses,
+    isCorrect,
+    turn,
+    usedKeys,
+    invalidShake,
+    errorKey,
+  } = useWordle(solution, gamemode);
+  const { stats, registerLoss, registerWin } = useStats(gamemode);
+  const { gameState, updateGameState, loadGameState } = useGameState(gamemode);
   const [showModal, setShowModal] = useState(false);
   const hasRegistered = useRef(false);
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     window.addEventListener('keyup', handleKeyup);
-
     if (isCorrect) {
       window.removeEventListener('keyup', handleKeyup);
     }
@@ -26,25 +45,89 @@ export default function Wordle({ solution }: { solution: string }) {
   }, [handleKeyup, turn, isCorrect]);
 
   useEffect(() => {
-    if (hasRegistered.current) return;
+    hasRegistered.current = false;
+  }, [solution]);
 
+  let state = gameState;
+
+  useEffect(() => {
+    state = loadGameState(gamemode);
+    if (gameState.gameCompleted) return;
+
+    // ganó
     if (isCorrect) {
-      console.log('register win');
-      hasRegistered.current = true;
       registerWin(turn);
+      state.gameCompleted = true;
+      updateGameState(state);
+
       setTimeout(() => setShowModal(true), 2000);
       return;
     }
 
+    // perdió
     if (turn > 5) {
-      hasRegistered.current = true;
       registerLoss();
+      state.gameCompleted = true;
+      updateGameState(state);
       setTimeout(() => setShowModal(true), 2000);
     }
-  }, [isCorrect, turn, registerWin, registerLoss]);
+  }, [isCorrect, turn, registerWin, registerLoss, gameState]);
+
+  useEffect(() => {
+    if (stats.played === 0) {
+      setShowWelcome(true);
+    }
+  }, [stats]);
+
+  useEffect(() => {
+    const accionesError: Record<number, () => void> = {
+      1: () => {
+        toast('La palabra no está en la lista', {
+          position: 'top-center',
+          autoClose: 1500,
+          theme: 'dark',
+          hideProgressBar: true,
+          className: 'bg-[#4C4C4C] font-Lato text-lg text-stone-50',
+        });
+      },
+      2: () => {
+        toast('No se permiten mas de 6 intentos', {
+          position: 'top-center',
+          autoClose: 1500,
+          theme: 'dark',
+          hideProgressBar: true,
+          className: 'bg-[#4C4C4C] font-Lato text-lg text-stone-50',
+        });
+      },
+      3: () => {
+        toast('No se permiten palabras duplicadas', {
+          position: 'top-center',
+          autoClose: 1500,
+          theme: 'dark',
+          hideProgressBar: true,
+          className: 'bg-[#4C4C4C] font-Lato text-lg text-stone-50',
+        });
+      },
+      4: () => {
+        toast(`La palabra tiene que tener ${solution.length} letras `, {
+          position: 'top-center',
+          autoClose: 1500,
+          theme: 'dark',
+          hideProgressBar: true,
+          className: 'bg-[#4C4C4C] font-Lato text-lg text-stone-50',
+        });
+      },
+    };
+    accionesError[errorKey]?.();
+  }, [errorKey, solution]);
 
   return (
-    <div className="z-10 text-stone-50 h-[100svh] w-[100svw] flex flex-col justify-end items-center pt-6 gap-6">
+    <div className=" text-stone-50 h-[100svh] w-[100svw] flex flex-col justify-end items-center pt-6 gap-6">
+      {showWelcome && (
+        <div className="absolute h-full w-full z-10">
+          <Welcome onClose={() => setShowWelcome(false)} />
+        </div>
+      )}
       <div className="flex-1">
         <Header
           onModalOpen={() => setShowModal(true)}
@@ -58,6 +141,7 @@ export default function Wordle({ solution }: { solution: string }) {
           guesses={guesses}
           turn={turn}
           solution={solution}
+          invalidShake={invalidShake}
         />
         <Keypad
           usedKeys={usedKeys}
@@ -75,7 +159,15 @@ export default function Wordle({ solution }: { solution: string }) {
           onClose={() => setShowModal(false)}
         />
       )}
-      {showMenu && <Menu onClose={() => setShowMenu(false)} />}
+      {showMenu && (
+        <Menu
+          isOpen={showMenu}
+          onClose={() => setShowMenu(false)}
+          onWelcomeOpen={() => setShowWelcome(true)}
+          handleGameMode={handleGameMode}
+        />
+      )}
+      <ToastContainer />
     </div>
   );
 }

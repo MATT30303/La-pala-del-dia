@@ -1,31 +1,51 @@
-import { useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { VALID_GUESSES } from '../data';
+import { useGameState } from './useGameState';
 
-const useWordle = (solution: string | null) => {
+const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
   const length = solution ? solution.length : 0;
 
-  const [turn, setTurn] = useState(0);
-  const [currentGuess, setCurrentGuess] = useState('') || null;
-  const [guesses, setGuesses] = useState([...Array(6)]);
-  const [history, setHistory] = useState([]);
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [usedKeys, setUsedKeys] = useState({});
+  const WORD_SET = useMemo(() => new Set(VALID_GUESSES), []);
+  const { gameState, updateGameState, resetGameState } = useGameState(gamemode);
+
+  //const { turn, currentGuess, guesses, history, isCorrect, usedKeys } = state;
+  const turn = gameState.turn;
+  const currentGuess = gameState.currentGuess;
+  const guesses = gameState.guesses;
+  const history = gameState.history;
+  const usedKeys = gameState.usedKeys;
+  const isCorrect = gameState.isCorrect;
+  const gameCompleted = gameState.gameCompleted;
+  const storedSolution = gameState.storedSolution;
+
+  useEffect(() => {
+    if (gameState.solutionStored !== solution) {
+      resetGameState(solution);
+    }
+  }, [solution]);
+
+  const [invalidShake, setInvalidShake] = useState(false);
+  const [errorKey, setErrorKey] = useState(0);
 
   type KeyColor = 'green' | 'yellow' | 'grey';
 
-  type GuessLetter = {
-    key: string;
-    color: KeyColor;
+  const triggerInvalidShake = () => {
+    setInvalidShake(true);
+    setTimeout(() => setInvalidShake(false), 300);
   };
-  type UsedKeys = Record<string, KeyColor>;
 
-  //Dar formato al string del intento para que sea un array  [{letter: "a", color: "grey"}]
+  const triggerError = (n: number) => {
+    setErrorKey(n);
+    setTimeout(() => setErrorKey(0), 300);
+  };
+
   const formatGuess = () => {
-    let solutionArray = [...solution!];
-    let formattedGuess = [...currentGuess].map((l) => {
-      return { key: l, color: 'grey' };
-    });
+    const solutionArray = [...solution!];
+    const formattedGuess = [...currentGuess].map((l) => ({
+      key: l,
+      color: 'grey' as KeyColor,
+    }));
 
-    //checar por verdes
     formattedGuess.forEach((l, i) => {
       if (solutionArray[i] === l.key) {
         formattedGuess[i].color = 'green';
@@ -33,98 +53,109 @@ const useWordle = (solution: string | null) => {
       }
     });
 
-    //checar por amarillos
     formattedGuess.forEach((l, i) => {
       if (solutionArray.includes(l.key) && l.color !== 'green') {
         formattedGuess[i].color = 'yellow';
         solutionArray[solutionArray.indexOf(l.key)] = null!;
       }
     });
+
     return formattedGuess;
   };
 
-  //agregar nuevo intento al estado del juego
-  //agregar intento al historial
-  //agregar turno
   const addNewGuess = (formattedGuess: []) => {
-    if (currentGuess === solution) {
-      setIsCorrect(true);
-    }
-    setGuesses((prevGuesses) => {
-      const newGuesses = [...prevGuesses];
-      newGuesses[turn] = formattedGuess;
-      return newGuesses;
-    });
-    setHistory((prevHistory) => {
-      return [...prevHistory, currentGuess];
-    });
-    setTurn((prevTurn) => prevTurn + 1);
-    setUsedKeys((prevUsedKeys: UsedKeys) => {
-      const newKeys: UsedKeys = { ...prevUsedKeys };
+    updateGameState((prev) => {
+      const newGuesses = [...prev.guesses];
+      newGuesses[prev.turn] = formattedGuess;
 
-      formattedGuess.forEach((l: GuessLetter) => {
-        const currentColor = newKeys[l.key];
+      const newHistory = [...prev.history, prev.currentGuess];
 
-        if (l.color === 'green') {
-          newKeys[l.key] = 'green';
-          return;
-        }
+      const newUsedKeys = { ...prev.usedKeys };
 
-        if (l.color === 'yellow' && currentColor !== 'green') {
-          newKeys[l.key] = 'yellow';
-          return;
-        }
-
-        if (
-          l.color === 'grey' &&
-          currentColor !== 'green' &&
-          currentColor !== 'yellow'
-        ) {
-          newKeys[l.key] = 'grey';
-        }
+      formattedGuess.forEach((l: any) => {
+        const currentColor = newUsedKeys[l.key];
+        if (l.color === 'green') newUsedKeys[l.key] = 'green';
+        else if (l.color === 'yellow' && currentColor !== 'green')
+          newUsedKeys[l.key] = 'yellow';
+        else if (!currentColor) newUsedKeys[l.key] = 'grey';
       });
 
-      return newKeys;
+      return {
+        ...prev,
+        turn: prev.turn + 1,
+        guesses: newGuesses,
+        history: newHistory,
+        usedKeys: newUsedKeys,
+        isCorrect: prev.currentGuess === solution,
+        currentGuess: '',
+      };
     });
-    setCurrentGuess('');
   };
 
-  //llevar conteo del actual intento
   const handleKeyup = ({ key }: { key: string }) => {
     if (key === 'Enter') {
-      //no permitir mas de 5 intentos
       if (turn > 5) {
-        console.log('no more guesses');
+        triggerInvalidShake();
+        triggerError(2);
         return;
       }
-      //no permitir palabras duplicadas
+
       if (history.includes(currentGuess)) {
-        console.log('you already tried that word');
+        triggerInvalidShake();
+        triggerError(3);
         return;
       }
-      //checar que la pala tenga la longitud correcta
+
       if (currentGuess.length !== length) {
-        console.log(`word must be ${length} chars long`);
+        triggerInvalidShake();
+        triggerError(4);
         return;
       }
+
+      if (
+        currentGuess.length === 5 &&
+        !WORD_SET.has(currentGuess.toLowerCase())
+      ) {
+        triggerInvalidShake();
+        triggerError(1);
+        return;
+      }
+
       const formatted = formatGuess();
       addNewGuess(formatted);
       return;
     }
+
     if (key === 'Backspace') {
-      setCurrentGuess((prev) => {
-        return prev.slice(0, -1);
-      });
+      updateGameState((prev) => ({
+        ...prev,
+        currentGuess: prev.currentGuess.slice(0, -1),
+      }));
       return;
     }
 
     if (/^\p{L}$/u.test(key)) {
       if (currentGuess.length < length) {
-        setCurrentGuess((prev) => prev + key.toLowerCase());
+        updateGameState((prev) => ({
+          ...prev,
+          currentGuess: prev.currentGuess + key.toLowerCase(),
+        }));
       }
     }
   };
 
-  return { turn, currentGuess, guesses, isCorrect, handleKeyup, usedKeys };
+  return {
+    turn,
+    currentGuess,
+    guesses,
+    isCorrect,
+    gameCompleted,
+    usedKeys,
+    history,
+    invalidShake,
+    errorKey,
+    handleKeyup,
+  };
 };
+
 export default useWordle;
