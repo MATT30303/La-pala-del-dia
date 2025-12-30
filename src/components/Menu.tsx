@@ -14,15 +14,13 @@ export default function Menu({
   return (
     <nav
       className={`w-80 h-full absolute left-0 top-0 p-4 bg-[#1A1A1A] flex flex-col items-start ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
+        isOpen ? 'animate-openMenu' : 'animate-closeMenu'
       }`}
     >
       <div
         className="absolute right-4 top-5 z-10 cursor-pointer"
         onClick={onClose}
-      >
-        <CloseMenu />
-      </div>
+      ></div>
       <div className="w-full flex justify-center ">
         <span className="font-Lato text-2xl text-stone-50">
           La boludez del dia
