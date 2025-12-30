@@ -150,3 +150,42 @@ body {
     }
   }
 }
+
+@theme {
+  --animate-openMenu: openMenu 0.3s ease-in-out;
+  @keyframes openMenu {
+    0% {
+      display: absolute;
+      left: -20rem;
+    }
+    100% {
+      left: 0;
+    }
+  }
+}
+@theme {
+  --animate-closeMenu: closeMenu forwards 0.3s ease-in-out;
+  @keyframes closeMenu {
+    0% {
+      display: absolute;
+      left: 0;
+    }
+    100% {
+      left: -20rem;
+    }
+  }
+}
+@theme {
+  --animate-menuIcon-open: menuIcon 0.5s ease-in-out forwards;
+  --animate-menuIcon-close: menuIcon 0.5s ease-in-out forwards reverse;
+  @keyframes menuIcon {
+    0% {
+      opacity: 0;
+      transform: rotate(180deg);
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(360deg);
+    }
+  }
+}
