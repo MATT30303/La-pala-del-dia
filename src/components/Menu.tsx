@@ -1,5 +1,3 @@
-import { CloseMenu } from '../icons';
-
 export default function Menu({
   onClose,
   onWelcomeOpen,

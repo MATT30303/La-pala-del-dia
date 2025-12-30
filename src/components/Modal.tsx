@@ -1,6 +1,4 @@
-import React from 'react';
 import { CloseMenu } from '../icons';
-import { useStats } from '../hooks/useStats';
 export default function Modal({
   solution,
   stats,
