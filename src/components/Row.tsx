@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react';
-
 export default function Row({
   solution,
   guess,
@@ -66,7 +64,7 @@ export default function Row({
 
   return (
     <div className="z-10 mb-3 flex justify-center gap-2 ">
-      {solution.split('').map((l, i) => (
+      {solution.split('').map((i) => (
         <div
           key={i}
           className="w-18 h-18 bg-[#101010] border border-[#7A7A7A] rounded-md color-stone-50"

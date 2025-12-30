@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { VALID_GUESSES } from '../data';
 import { useGameState } from './useGameState';
+import type { GameState } from '../interfaces/types';
 
 const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
   const length = solution ? solution.length : 0;
@@ -15,7 +16,6 @@ const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
   const usedKeys = gameState.usedKeys;
   const isCorrect = gameState.isCorrect;
   const gameCompleted = gameState.gameCompleted;
-  const storedSolution = gameState.storedSolution;
 
   useEffect(() => {
     if (gameState.solutionStored !== solution) {
@@ -62,16 +62,15 @@ const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
     return formattedGuess;
   };
 
-  const addNewGuess = (formattedGuess: []) => {
-    updateGameState((prev) => {
+  const addNewGuess = (formattedGuess: { key: string; color: KeyColor }[]) => {
+    updateGameState((prev: GameState) => {
       const newGuesses = [...prev.guesses];
       newGuesses[prev.turn] = formattedGuess;
 
       const newHistory = [...prev.history, prev.currentGuess];
-
       const newUsedKeys = { ...prev.usedKeys };
 
-      formattedGuess.forEach((l: any) => {
+      formattedGuess.forEach((l) => {
         const currentColor = newUsedKeys[l.key];
         if (l.color === 'green') newUsedKeys[l.key] = 'green';
         else if (l.color === 'yellow' && currentColor !== 'green')
