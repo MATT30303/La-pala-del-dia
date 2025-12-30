@@ -54,7 +54,6 @@ export default function Wordle({
     state = loadGameState(gamemode);
     if (gameState.gameCompleted) return;
 
-    // ganó
     if (isCorrect) {
       registerWin(turn);
       state.gameCompleted = true;
@@ -64,7 +63,6 @@ export default function Wordle({
       return;
     }
 
-    // perdió
     if (turn > 5) {
       registerLoss();
       state.gameCompleted = true;
@@ -131,7 +129,8 @@ export default function Wordle({
       <div className="flex-1">
         <Header
           onModalOpen={() => setShowModal(true)}
-          onMenuOpen={() => setShowMenu(true)}
+          setShowMenu={setShowMenu}
+          showMenu={showMenu}
         />
       </div>
       <span> </span>
@@ -159,14 +158,14 @@ export default function Wordle({
           onClose={() => setShowModal(false)}
         />
       )}
-      {showMenu && (
-        <Menu
-          isOpen={showMenu}
-          onClose={() => setShowMenu(false)}
-          onWelcomeOpen={() => setShowWelcome(true)}
-          handleGameMode={handleGameMode}
-        />
-      )}
+
+      <Menu
+        isOpen={showMenu}
+        onClose={() => setShowMenu(false)}
+        onWelcomeOpen={() => setShowWelcome(true)}
+        handleGameMode={handleGameMode}
+      />
+
       <ToastContainer />
     </div>
   );

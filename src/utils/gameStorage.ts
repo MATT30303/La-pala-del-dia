@@ -1,7 +1,7 @@
 const DEFAULT_STATE = {
   turn: 0,
   currentGuess: '',
-  guesses: Array(6).fill(null), // 👈 IMPORTANTE
+  guesses: Array(6).fill(null),
   history: [],
   isCorrect: false,
   gameCompleted: false,

@@ -8,7 +8,6 @@ const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
   const WORD_SET = useMemo(() => new Set(VALID_GUESSES), []);
   const { gameState, updateGameState, resetGameState } = useGameState(gamemode);
 
-  //const { turn, currentGuess, guesses, history, isCorrect, usedKeys } = state;
   const turn = gameState.turn;
   const currentGuess = gameState.currentGuess;
   const guesses = gameState.guesses;
