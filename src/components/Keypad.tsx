@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { LETTERS } from '../data';
 import { Backspace, Enter } from '../icons';
+import type { ReactNode } from 'react';
+
+interface Letter {
+  key: string;
+  label: ReactNode;
+}
+
 export default function Keypad({
   usedKeys,
   onKeyPress,
@@ -12,7 +19,7 @@ export default function Keypad({
   turn: number;
   isCorrect: boolean;
 }) {
-  const [letters, setLetters] = useState(null);
+  const [letters, setLetters] = useState<Letter[]>([]);
 
   useEffect(() => {
     setLetters(LETTERS);
