@@ -25,8 +25,8 @@ export function useDailySolution() {
       if (data.date === today) {
         setSolutionNormal(SOLUTIONS[data.solution_normal].word);
         setDescriptionNormal(SOLUTIONS[data.solution_normal].description);
-        setSolutionHard(SOLUTIONS[data.solution_hard].word);
-        setSolutionEasy(SOLUTIONS[data.solution_easy].word);
+        setSolutionHard(SOLUTIONS_HARD[data.solution_hard].word);
+        setSolutionEasy(SOLUTIONS_EASY[data.solution_easy].word);
         return;
       }
     }
