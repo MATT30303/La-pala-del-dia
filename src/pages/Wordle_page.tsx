@@ -24,7 +24,6 @@ export function DefaultWordle_page() {
     }
   }, [gamemode, solutionEasy, solutionHard, solutionNormal, descriptionNormal]);
 
-  console.log(description);
   const handleGameMode = (game: number) => {
     const setGame: Record<number, () => void> = {
       1: () => {
