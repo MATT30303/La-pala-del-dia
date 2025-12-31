@@ -5,6 +5,7 @@ import { useStats } from '../hooks/useStats';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useGameState } from '../hooks/useGameState';
+import { CheckStats } from '../utils/checkStats';
 
 export default function Wordle({
   solution,
@@ -71,11 +72,10 @@ export default function Wordle({
     }
   }, [isCorrect, turn, registerWin, registerLoss, gameState]);
 
+  const played = CheckStats();
   useEffect(() => {
-    if (stats.played === 0) {
-      setShowWelcome(true);
-    }
-  }, [stats]);
+    if (!played) setShowWelcome(true);
+  }, [played]);
 
   useEffect(() => {
     const accionesError: Record<number, () => void> = {
