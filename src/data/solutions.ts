@@ -821,7 +821,17 @@ const SOLUTIONS = [
     word: 'remis',
     description: 'Auto de transporte privado por encargo.',
   },
+  {
+    id: 163,
+    word: 'ladri',
+    description: 'Ladron en lunfardo.',
+  },
+  {
+    id: 164,
+    word: 'zapan',
+    description: 'Juego de silabas para panza',
+  },
 ];
 
 export default SOLUTIONS;
-// fijate  86 maaal
+// fijate
