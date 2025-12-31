@@ -6,7 +6,6 @@ export function CheckStats() {
   const easy: number = Easy();
 
   const result = normal !== 0 || hard !== 0 || easy !== 0;
-  console.log(normal, hard, easy, result);
   return result;
 }
 

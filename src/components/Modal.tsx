@@ -5,8 +5,10 @@ export default function Modal({
   onClose,
   isCorrect,
   turn,
+  description,
 }: {
   solution: string;
+  description: string | null;
   stats: {
     played: number;
     wins: number;
@@ -20,6 +22,7 @@ export default function Modal({
 }) {
   const accuracy =
     stats.played > 0 ? Math.round((stats.wins / stats.played) * 100) : 0;
+  console.log(description);
 
   const STAT_ITEMS = [
     { label: 'Total de jugadas', value: stats.played },
@@ -42,10 +45,9 @@ export default function Modal({
               <span className="text-4xl uppercase tracking-wide mt-2 mb-4">
                 {solution}
               </span>
-              <span
-                className="text-xl text-stone-200"
-                id="TU DESCRIPCION VA ACA FLACO"
-              ></span>
+              <span className="text-xl text-stone-200">
+                {description ? description : ''}
+              </span>
             </div>
           ) : null}
         </div>

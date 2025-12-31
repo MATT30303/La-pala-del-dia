@@ -1,19 +1,30 @@
 import { useEffect, useState } from 'react';
 import Wordle from '../components/Wordle.tsx';
-import { useDailySolution } from '../hooks/useSolution.ts';
+import { useDailySolution } from '../hooks/useDailySolution.ts';
 export function DefaultWordle_page() {
-  const { solutionNormal, solutionHard, solutionEasy } = useDailySolution();
+  const { solutionNormal, solutionHard, solutionEasy, descriptionNormal } =
+    useDailySolution();
   const [solution, setSolution] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
   const [gamemode, setGamemode] = useState<'normal' | 'hard' | 'easy'>(
     'normal'
   );
-
   useEffect(() => {
-    if (gamemode === 'easy') setSolution(solutionEasy);
-    if (gamemode === 'normal') setSolution(solutionNormal);
-    if (gamemode === 'hard') setSolution(solutionHard);
-  }, [gamemode, solutionEasy, solutionHard, solutionNormal]);
+    if (gamemode === 'easy') {
+      setSolution(solutionEasy);
+      setDescription(null);
+    }
+    if (gamemode === 'normal') {
+      setSolution(solutionNormal);
+      setDescription(descriptionNormal);
+    }
+    if (gamemode === 'hard') {
+      setSolution(solutionHard);
+      setDescription(null);
+    }
+  }, [gamemode, solutionEasy, solutionHard, solutionNormal, descriptionNormal]);
 
+  console.log(description);
   const handleGameMode = (game: number) => {
     const setGame: Record<number, () => void> = {
       1: () => {
@@ -38,6 +49,7 @@ export function DefaultWordle_page() {
           <Wordle
             key={gamemode + '-' + solution}
             solution={solution}
+            description={description}
             gamemode={gamemode}
             handleGameMode={handleGameMode}
           ></Wordle>

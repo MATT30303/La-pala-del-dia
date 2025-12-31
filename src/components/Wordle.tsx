@@ -11,8 +11,10 @@ export default function Wordle({
   solution,
   gamemode,
   handleGameMode,
+  description,
 }: {
   solution: string;
+  description: string | null;
   gamemode: 'normal' | 'hard' | 'easy';
   handleGameMode: (game: number) => void;
 }) {
@@ -154,6 +156,7 @@ export default function Wordle({
           isCorrect={isCorrect}
           turn={turn}
           solution={solution}
+          description={description}
           stats={stats}
           onClose={() => setShowModal(false)}
         />

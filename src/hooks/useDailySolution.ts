@@ -5,6 +5,12 @@ export function useDailySolution() {
   const [solutionHard, setSolutionHard] = useState<string | null>(null);
   const [solutionEasy, setSolutionEasy] = useState<string | null>(null);
 
+  const [descriptionNormal, setDescriptionNormal] = useState<string | null>(
+    null
+  );
+  // const [descriptionHard, setDescriptionHard] = useState<string | null>(null);
+  // const [descriptionEasy, setDescriptionEasy] = useState<string | null>(null);
+
   function getTodayKey() {
     const today = new Date();
     return today.toISOString().split('T')[0];
@@ -17,9 +23,10 @@ export function useDailySolution() {
     if (stored) {
       const data = JSON.parse(stored);
       if (data.date === today) {
-        setSolutionNormal(data.solution_normal);
-        setSolutionHard(data.solution_hard);
-        setSolutionEasy(data.solution_easy);
+        setSolutionNormal(SOLUTIONS[data.solution_normal].word);
+        setDescriptionNormal(SOLUTIONS[data.solution_normal].description);
+        setSolutionHard(SOLUTIONS[data.solution_hard].word);
+        setSolutionEasy(SOLUTIONS[data.solution_easy].word);
         return;
       }
     }
@@ -31,9 +38,9 @@ export function useDailySolution() {
       SOLUTIONS_HARD[Math.floor(Math.random() * SOLUTIONS_HARD.length)];
 
     const newData = {
-      solution_normal: newSolution_NORMAL.word,
-      solution_hard: newSolution_HARD.word,
-      solution_easy: newSolution_EASY.word,
+      solution_normal: newSolution_NORMAL.id,
+      solution_hard: newSolution_HARD.id,
+      solution_easy: newSolution_EASY.id,
       date: today,
     };
 
@@ -43,5 +50,10 @@ export function useDailySolution() {
     setSolutionEasy(newSolution_EASY.word);
   }, [SOLUTIONS]);
 
-  return { solutionNormal, solutionHard, solutionEasy };
+  return {
+    solutionNormal,
+    solutionHard,
+    solutionEasy,
+    descriptionNormal,
+  };
 }
