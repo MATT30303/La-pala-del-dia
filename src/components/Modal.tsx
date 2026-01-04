@@ -40,7 +40,7 @@ export default function Modal({
               onClose();
             }}
           />
-          {isCorrect && turn <= 6 ? (
+          {isCorrect || turn >= 5 ? (
             <div className="flex flex-col items-center h-3/12">
               <span className="text-4xl uppercase tracking-wide mt-2 mb-4">
                 {solution}
