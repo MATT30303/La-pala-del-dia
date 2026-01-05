@@ -45,7 +45,7 @@ export default function Modal({
               <span className="text-4xl uppercase tracking-wide mt-2 mb-4">
                 {solution}
               </span>
-              <span className="text-xl text-stone-200">
+              <span className="text-xl text-stone-200 text-center w-9/12">
                 {description ? description : ''}
               </span>
             </div>
