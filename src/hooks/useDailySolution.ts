@@ -8,8 +8,8 @@ export function useDailySolution() {
   const [descriptionNormal, setDescriptionNormal] = useState<string | null>(
     null
   );
-  // const [descriptionHard, setDescriptionHard] = useState<string | null>(null);
-  // const [descriptionEasy, setDescriptionEasy] = useState<string | null>(null);
+  const [descriptionHard, setDescriptionHard] = useState<string | null>(null);
+  const [descriptionEasy, setDescriptionEasy] = useState<string | null>(null);
 
   function getTodayKey() {
     const today = new Date();
@@ -26,7 +26,9 @@ export function useDailySolution() {
         setSolutionNormal(SOLUTIONS[data.solution_normal].word);
         setDescriptionNormal(SOLUTIONS[data.solution_normal].description);
         setSolutionHard(SOLUTIONS_HARD[data.solution_hard].word);
+        setDescriptionHard(SOLUTIONS_HARD[data.solution_hard].description);
         setSolutionEasy(SOLUTIONS_EASY[data.solution_easy].word);
+        setDescriptionEasy(SOLUTIONS_EASY[data.solution_easy].description);
         return;
       }
     }
@@ -55,5 +57,7 @@ export function useDailySolution() {
     solutionHard,
     solutionEasy,
     descriptionNormal,
+    descriptionEasy,
+    descriptionHard,
   };
 }

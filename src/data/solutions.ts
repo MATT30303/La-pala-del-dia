@@ -351,7 +351,7 @@ const SOLUTIONS = [
   {
     id: 70,
     word: 'gorra',
-    description: 'Policía (lunfardo).',
+    description: 'Policía en lunfardo.',
   },
   {
     id: 71,
