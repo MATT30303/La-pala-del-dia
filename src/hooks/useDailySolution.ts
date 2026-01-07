@@ -50,6 +50,9 @@ export function useDailySolution() {
     setSolutionNormal(newSolution_NORMAL.word);
     setSolutionHard(newSolution_HARD.word);
     setSolutionEasy(newSolution_EASY.word);
+    setDescriptionNormal(newSolution_NORMAL.description);
+    setDescriptionHard(newSolution_HARD.description);
+    setDescriptionEasy(newSolution_EASY.description);
   }, [SOLUTIONS]);
 
   return {
