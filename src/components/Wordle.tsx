@@ -167,6 +167,7 @@ export default function Wordle({
         onClose={() => setShowMenu(false)}
         onWelcomeOpen={() => setShowWelcome(true)}
         handleGameMode={handleGameMode}
+        gamemode={gamemode}
       />
 
       <ToastContainer />
