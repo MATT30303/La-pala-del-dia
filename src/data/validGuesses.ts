@@ -10971,6 +10971,7 @@ const valid_guesses = [
   'croto',
   'culiado',
   'cucurucho',
+  'chill',
 
   //palabras con d
 
@@ -11127,6 +11128,7 @@ const valid_guesses = [
   'lompa',
   'lta',
   'lunfardo',
+  'ladri',
 
   //palabras con m
 
@@ -11305,6 +11307,7 @@ const valid_guesses = [
   'roñoso',
   'rosca',
   'rosarino',
+  'remis',
 
   //palabras con s
   'sacado',
@@ -11424,5 +11427,6 @@ const valid_guesses = [
   'zurdo',
   'zapallo',
   'zapatilla',
+  'zapan',
 ];
 export default valid_guesses;
