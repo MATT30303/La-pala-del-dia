@@ -6,7 +6,7 @@ export default function Welcome({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="h-full w-full z-20 flex flex-col justify-center items-center cursor-default"
+      className="h-full w-full z-30 flex flex-col justify-center items-center cursor-default"
       id="welcome"
     >
       <div className="flex-1 mt-4 flex flex-col items-center">

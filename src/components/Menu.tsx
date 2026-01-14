@@ -11,6 +11,8 @@ import {
   Mate,
 } from '../assets/images';
 
+import { CloseMenu } from '../icons';
+
 export default function Menu({
   onClose,
   onWelcomeOpen,
@@ -34,7 +36,7 @@ export default function Menu({
         {gamemode === 'normal' ? (
           <div className=" ">
             <img src={Maradona} alt="" className="absolute bottom-0 z-0" />
-            <img src={Messi} alt="" className="relative bottom-0 z-10" />
+            <img src={Messi} alt="" className="relative bottom-0 z-0" />
           </div>
         ) : gamemode === 'easy' ? (
           <div className=" ">
@@ -64,13 +66,15 @@ export default function Menu({
       <div
         className="absolute right-4 top-5 z-10 cursor-pointer"
         onClick={onClose}
-      ></div>
+      >
+        <CloseMenu></CloseMenu>
+      </div>
       <div className="w-full flex justify-center ">
         <span className="font-Lato text-2xl text-stone-50">
           La boludez del dia
         </span>
       </div>
-      <div className="mt-24">
+      <div className="mt-24 ">
         <span className="font-Lato text-lg text-stone-300 cursor-default">
           Modos de juego
         </span>
@@ -113,7 +117,7 @@ export default function Menu({
           </li>
         </ul>
       </div>
-      <div className="mt-12">
+      <div className="mt-12 z-10">
         <span className="font-Lato text-lg text-stone-300  cursor-default">
           Informacion
         </span>

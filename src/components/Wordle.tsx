@@ -124,7 +124,7 @@ export default function Wordle({
   return (
     <div className=" text-stone-50 h-[100svh] w-[100svw] flex flex-col justify-end items-center pt-6 gap-6">
       {showWelcome && (
-        <div className="absolute h-full w-full z-10">
+        <div className="absolute h-full w-full z-30">
           <Welcome onClose={() => setShowWelcome(false)} />
         </div>
       )}
