@@ -14,7 +14,7 @@ export default function Grid({
   invalidShake: boolean;
 }) {
   return (
-    <div className=" h-[50vh]">
+    <div className="">
       {guesses.map((g, i) => (
         <Row
           key={i}

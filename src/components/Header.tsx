@@ -1,4 +1,5 @@
 import { Menu, StatsIcon, LeftArrow } from '../icons/';
+
 export default function Header({
   onModalOpen,
   setShowMenu,
@@ -9,25 +10,26 @@ export default function Header({
   showMenu: boolean;
 }) {
   function MenuSwitch() {
-    if (showMenu) setShowMenu(false);
-    else setShowMenu(true);
+    setShowMenu(!showMenu);
   }
 
   return (
-    <div className="w-full h-15 flex justify-center items-center gap-12">
+    <header className="md:h-16 flex items-center justify-around gap-0 md:px-6">
       <div onClick={MenuSwitch}>
         {showMenu ? (
-          <LeftArrow className=" animate-menuIcon-open cursor-pointer w-10 text-[rgb(162_161_160_/0.6)]" />
+          <LeftArrow className="animate-menuIcon-open cursor-pointer w-7 md:w-9 text-[rgb(162_161_160_/0.6)]" />
         ) : (
-          <Menu className="animate-menuIcon-open cursor-pointer w-10  text-[#A2A1A0]" />
+          <Menu className="animate-menuIcon-open cursor-pointer w-7 md:w-9 text-[#A2A1A0]" />
         )}
       </div>
-      <span className="font-Lato font-normal text-[1.8rem]">
+
+      <span className="font-Lato font-normal text-2xl sm:text-2xl md:text-3xl lg:text-[1.8rem] text-center">
         LA BOLUDEZ DEL DIA
       </span>
+
       <div onClick={onModalOpen}>
-        <StatsIcon className="cursor-pointer w-10 text-[#A2A1A0]" />
+        <StatsIcon className="cursor-pointer w-8 md:w-9 text-[#A2A1A0]" />
       </div>
-    </div>
+    </header>
   );
 }

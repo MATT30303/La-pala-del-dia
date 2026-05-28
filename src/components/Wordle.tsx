@@ -122,21 +122,20 @@ export default function Wordle({
   }, [errorKey, solution]);
 
   return (
-    <div className=" text-stone-50 h-[100svh] w-[100svw] flex flex-col justify-end items-center pt-6 gap-6">
+    <div className="text-stone-50 h-screen w-screen flex flex-col items-center pt-0 gap-0">
       {showWelcome && (
         <div className="absolute h-full w-full z-30">
           <Welcome onClose={() => setShowWelcome(false)} />
         </div>
       )}
-      <div className="flex-1">
+      <div className="flex-1 w-full pt-4 lg:pt-0 xl:pt-0">
         <Header
           onModalOpen={() => setShowModal(true)}
           setShowMenu={setShowMenu}
           showMenu={showMenu}
         />
       </div>
-      <span> </span>
-      <div className="h-full flex flex-col items-center justify-between gap-0 mb-6">
+      <div className="h-[90%] flex flex-col items-center justify-around">
         <Grid
           currentGuess={currentGuess}
           guesses={guesses}
@@ -161,7 +160,6 @@ export default function Wordle({
           onClose={() => setShowModal(false)}
         />
       )}
-
       <Menu
         isOpen={showMenu}
         onClose={() => setShowMenu(false)}
@@ -169,7 +167,6 @@ export default function Wordle({
         handleGameMode={handleGameMode}
         gamemode={gamemode}
       />
-
       <ToastContainer />
     </div>
   );

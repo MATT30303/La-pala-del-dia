@@ -9,21 +9,28 @@ export default function Row({
   currentGuess?: string | '';
   invalidShake: boolean;
 }) {
-  const green =
-    'bg-[#101010] animate-flip-green border border-[#7A7A7A] text-stone-50 w-18 h-18 font-Lato uppercase text-5xl font-semibold text-shadow-[0_4px_4px_rgb(0_0_0/_0.25)] flex justify-center items-center rounded-md color-stone-50';
-  const yellow =
-    'bg-[#101010] animate-flip-yellow border border-[#7A7A7A] text-stone-50 w-18 h-18 font-Lato uppercase text-5xl font-semibold text-shadow-[0_4px_4px_rgb(0_0_0/_0.25)]  flex justify-center items-center rounded-md color-stone-50 ';
-  const gray =
-    'bg-[#101010] animate-flip-gray border border-[#7A7A7A] text-stone-50 w-18 h-18 font-Lato uppercase text-5xl font-semibold text-shadow-[0_4px_4px_rgb(0_0_0/_0.25)] flex justify-center items-center rounded-md color-stone-50';
+  const green = 'animate-flip-green';
+  const yellow = 'animate-flip-yellow';
+  const gray = 'animate-flip-gray';
+  const base =
+    'bg-[#101010]  border border-[#7A7A7A] text-stone-50 w-12 h-12 font-Lato uppercase text-3xl font-semibold text-shadow-[0_4px_4px_rgb(0_0_0/_0.25)] flex justify-center items-center rounded-sm color-stone-50';
+  const baseNoBorder =
+    'bg-[#101010]  text-stone-50 w-12 h-12 font-Lato uppercase text-3xl font-semibold text-shadow-[0_4px_4px_rgb(0_0_0/_0.25)] flex justify-center items-center rounded-sm color-stone-50';
 
   if (guess) {
     return (
-      <div className={`z-10 mb-3 flex justify-center gap-2`}>
+      <div className={`z-10 mb-2 flex justify-center gap-1`}>
         {guess.map((l, i) => (
           <div
             key={i}
             className={
-              l.color === 'green' ? green : l.color === 'yellow' ? yellow : gray
+              base +
+              ' ' +
+              (l.color === 'green'
+                ? green
+                : l.color === 'yellow'
+                  ? yellow
+                  : gray)
             }
             style={{ animationDelay: `${i * 0.13}s` }}
           >
@@ -37,15 +44,12 @@ export default function Row({
   if (currentGuess === '' || currentGuess) {
     return (
       <div
-        className={`z-10 mb-3 flex justify-center gap-2 ${
+        className={`z-10 mb-2 flex justify-center gap-1 ${
           invalidShake ? 'animate-shake' : ''
         }`}
       >
         {currentGuess.split('').map((l, i) => (
-          <div
-            key={i}
-            className="w-18 h-18 animate-popIn bg-[#101010] border border-[#7A7A7A] rounded-md color-stone-50 flex justify-center items-center uppercase text-5xl font-semibold text-shadow-[0_4px_4px_rgb(0_0_0/_0.25)]"
-          >
+          <div key={i} className={base + ' animate-popIn'}>
             {l}
           </div>
         ))}
@@ -53,22 +57,22 @@ export default function Row({
           (_, i) => (
             <div
               key={i}
-              className={`w-18 h-18 bg-[#101010] border rounded-md 
-          ${i === 0 ? ' border-[#1FD7F8]' : 'border-[#7A7A7A]'}`}
+              className={
+                baseNoBorder +
+                ' ' +
+                `${i === 0 ? 'border border-[#1FD7F8]' : 'border border-[#7A7A7A]'}`
+              }
             />
-          )
+          ),
         )}
       </div>
     );
   }
 
   return (
-    <div className="z-10 mb-3 flex justify-center gap-2 ">
+    <div className="z-10 mb-2 flex justify-center gap-1 ">
       {solution.split('').map((_, i) => (
-        <div
-          key={i}
-          className="w-18 h-18 bg-[#101010] border border-[#7A7A7A] rounded-md color-stone-50"
-        ></div>
+        <div key={i} className={base}></div>
       ))}
     </div>
   );
