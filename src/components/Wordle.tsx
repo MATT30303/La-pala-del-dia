@@ -122,7 +122,7 @@ export default function Wordle({
   }, [errorKey, solution]);
 
   return (
-    <div className="text-stone-50 h-screen w-screen flex flex-col items-center pt-0 gap-0">
+    <div className="text-stone-50 h-svh w-screen flex flex-col items-center pt-0 gap-0">
       {showWelcome && (
         <div className="absolute h-full w-full z-30">
           <Welcome onClose={() => setShowWelcome(false)} />
@@ -135,7 +135,7 @@ export default function Wordle({
           showMenu={showMenu}
         />
       </div>
-      <div className="h-[90%] flex flex-col items-center justify-around">
+      <div className="h-[90%] w-11/12 flex flex-col items-center justify-center gap-10">
         <Grid
           currentGuess={currentGuess}
           guesses={guesses}

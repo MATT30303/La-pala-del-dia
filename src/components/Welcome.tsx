@@ -39,7 +39,7 @@ export default function Welcome({ onClose }: { onClose: () => void }) {
   return (
     <div
       id="welcome"
-      className="h-full w-full flex flex-col  items-center cursor-default z-30"
+      className="h-full w-full flex flex-col  items-center cursor-default z-30 pt-2"
     >
       <div className="flex-1 flex flex-col items-center max-w-[900px]">
         <LetterRow letters={['L', 'A']} color="gray" />
