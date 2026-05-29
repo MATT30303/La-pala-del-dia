@@ -19,7 +19,7 @@ export default function Row({
 
   if (guess) {
     return (
-      <div className={`z-10 mb-2 flex justify-center gap-1`}>
+      <div className={`z-10 flex justify-center gap-1`}>
         {guess.map((l, i) => (
           <div
             key={i}
