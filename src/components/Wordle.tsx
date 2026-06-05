@@ -122,13 +122,13 @@ export default function Wordle({
   }, [errorKey, solution]);
 
   return (
-    <div className="text-stone-50 h-svh w-screen flex flex-col items-center pt-0 gap-0">
+    <div className="text-stone-50 h-svh w-screen flex flex-col items-center justify-center pt-0 gap-0 overflow-hidden">
       {showWelcome && (
         <div className="absolute h-full w-full z-30">
           <Welcome onClose={() => setShowWelcome(false)} />
         </div>
       )}
-      <div className="flex-1 w-full pt-4 lg:pt-0 xl:pt-0">
+      <div className="flex-1 w-11/12 max-h-15 lg:pt-0 xl:pt-0">
         <Header
           onModalOpen={() => setShowModal(true)}
           setShowMenu={setShowMenu}

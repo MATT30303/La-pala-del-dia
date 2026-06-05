@@ -32,7 +32,7 @@ export default function Menu({
         isOpen ? 'animate-openMenu' : 'animate-closeMenu'
       }`}
     >
-      <div className="absolute bottom-0 right-0">
+      <div className="absolute bottom-0 right-0 z-0">
         {gamemode === 'normal' ? (
           <div className=" ">
             <img src={Maradona} alt="" className="absolute bottom-0 z-0" />
@@ -74,7 +74,7 @@ export default function Menu({
           La boludez del dia
         </span>
       </div>
-      <div className="mt-24 ">
+      <div className="mt-24 z-10 ">
         <span className="font-Lato text-lg text-stone-300 cursor-default">
           Modos de juego
         </span>

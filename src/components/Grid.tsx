@@ -14,7 +14,7 @@ export default function Grid({
   invalidShake: boolean;
 }) {
   return (
-    <div className="">
+    <div className="w-full flex flex-col justify-center">
       {guesses.map((g, i) => (
         <Row
           key={i}
