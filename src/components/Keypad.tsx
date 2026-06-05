@@ -15,17 +15,13 @@ export default function Keypad({
   const row2 = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ'];
   const row3 = ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace'];
 
-  const green =
-    'bg-[#202B20] border border-[#43A047] text-stone-100 w-8 sm:w-10 md:w-12 lg:w-12 h-12 sm:h-12 md:h-15 font-Manrope uppercase text-xl sm:text-xl md:text-2xl font-regular text-shadow-[0_4px_4px_rgb(0_0_0/_0.4)] flex justify-center items-center rounded-md m-[2px] sm:m-1';
+  const green = 'bg-[#202B20] border border-[#43A047] text-stone-100';
 
-  const yellow =
-    'bg-[#2A2820] border border-[#e4a81d] text-stone-100 w-8 sm:w-10 md:w-12 lg:w-12 h-12 sm:h-12 md:h-15 font-Manrope uppercase text-xl sm:text-xl md:text-2xl font-regular text-shadow-[0_4px_4px_rgb(0_0_0/_0.4)] flex justify-center items-center rounded-md m-[2px] sm:m-1';
+  const yellow = 'bg-[#2A2820] border border-[#e4a81d] text-stone-100';
 
-  const grey =
-    'bg-[#232323] border border-[#7A7A7A] text-stone-100 w-8 sm:w-10 md:w-12 lg:w-12 h-12 sm:h-12 md:h-15 font-Manrope uppercase text-xl sm:text-xl md:text-2xl font-regular text-shadow-[0_4px_4px_rgb(0_0_0/_0.4)] flex justify-center items-center rounded-md m-[2px] sm:m-1';
+  const grey = 'bg-[#232323] border border-[#7A7A7A] text-stone-100';
 
-  const normal =
-    'bg-[#3A3A3B] border border-[#7a7a7a] text-stone-100 w-8 sm:min-w-10 md:min-w-12 lg:min-w-12  px-2 sm:px-2 h-12 sm:h-10 md:h-13 lg:h-13 font-Manrope uppercase text-xl sm:text-xl md:text-2xl font-regular text-shadow-[0_4px_4px_rgb(0_0_0/_0.5)] flex justify-center items-center rounded-md m-[2px] sm:m-1';
+  const normal = 'bg-[#3A3A3B] border border-[#7A7A7A] text-stone-100';
 
   function renderKey(key: string) {
     const color = usedKeys ? usedKeys[key] : '';
@@ -42,34 +38,50 @@ export default function Keypad({
 
     if (key === 'Backspace') {
       label = (
-        <Backspace className="w-6 md:w-7 md:h-10 lg:mx-3  drop-shadow-[0px_4px_4px_rgba(0,0,0,.5)]" />
+        <Backspace className="w-6 md:w-8 drop-shadow-[0px_4px_4px_rgba(0,0,0,.5)]" />
       );
     }
 
     if (key === 'Enter') {
       label = (
-        <Enter className="w-6 drop-shadow-[0px_4px_4px_rgba(0,0,0,.5)]" />
+        <Enter className="w-6 md:w-8 drop-shadow-[0px_4px_4px_rgba(0,0,0,.5)]" />
       );
     }
+
+    const colorClass =
+      color === 'green'
+        ? green
+        : color === 'yellow'
+          ? yellow
+          : color === 'grey'
+            ? grey
+            : normal;
+
+    const spanClass =
+      key === 'Enter' || key === 'Backspace' ? 'col-span-3' : 'col-span-2';
 
     return (
       <button
         key={key}
         onClick={handleClick}
         className={`
-          ${
-            color === 'green'
-              ? green
-              : color === 'yellow'
-                ? yellow
-                : color === 'grey'
-                  ? grey
-                  : normal
-          }
-          ${key === 'Enter' ? 'min-w-12' : key === 'Backspace' ? 'min-w-12' : ''}
-          ${color ? ' animate-popIn' : ' '}
-          duration-50 hover:brightness-110 cursor-pointer
-
+          ${colorClass}
+          ${spanClass}
+          h-12 md:h-14
+          font-Manrope
+          uppercase
+          text-lg md:text-[1.5rem]
+          font-regular
+          text-shadow-[0_4px_4px_rgb(0_0_0/_0.5)]
+          flex
+          justify-center
+          items-center
+          rounded-md
+          hover:brightness-110
+          cursor-pointer
+          transition-all
+          text-stone-50
+          ${color ? 'animate-popIn' : ''}
         `}
       >
         {label}
@@ -78,15 +90,18 @@ export default function Keypad({
   }
 
   return (
-    <div className="w-full flex flex-col items-center gap-2">
-      {/* ROW 1 */}
-      <div className="w-full flex justify-between ">{row1.map(renderKey)}</div>
+    <div className="w-full max-w-lg mx-auto flex flex-col gap-1 lg:gap-2">
+      <div className="grid grid-cols-20 gap-1 lg:gap-2">
+        {row1.map(renderKey)}
+      </div>
 
-      {/* ROW 2 */}
-      <div className="w-full flex justify-between ">{row2.map(renderKey)}</div>
+      <div className="grid grid-cols-20 gap-1 lg:gap-2">
+        {row2.map(renderKey)}
+      </div>
 
-      {/* ROW 3 */}
-      <div className="w-full flex justify-between">{row3.map(renderKey)}</div>
+      <div className="grid grid-cols-20 gap-1 lg:gap-2">
+        {row3.map(renderKey)}
+      </div>
     </div>
   );
 }
