@@ -12,38 +12,38 @@ export default function Row({
   const getTileClasses = (length: number) => {
     if (length <= 5) {
       return {
-        size: 'w-15 min-w-7 max-w-15',
-        text: 'text-4xl',
+        size: 'w-15 min-w-7 max-w-15 md:w-16 md:max-w-16 lg:w-17 lg:max-w-17',
+        text: 'text-4xl md:text-[2.5rem]',
       };
     }
 
     if (length <= 7) {
       return {
-        size: 'w-13 min-w-7 max-w-13',
-        text: 'text-3xl',
+        size: 'w-13 min-w-7 max-w-13 md:w-15 md:max-w-15 lg:w-16 lg:max-w-16',
+        text: 'text-3xl md:text-4xl',
       };
     }
 
     if (length <= 9) {
       return {
-        size: 'w-11 min-w-7 max-w-11',
-        text: 'text-2xl',
+        size: 'w-11 min-w-7 max-w-11 md:w-13 md:max-w-13 lg:w-15 lg:max-w-15',
+        text: 'text-2xl md:text-3xl lg:text-4xl',
       };
     }
 
     if (length <= 11) {
       return {
-        size: 'w-10 min-w-7 max-w-10',
-        text: 'text-xl',
+        size: 'w-10 min-w-7 max-w-10 md:w-12 md:max-w-12 lg:w-13 lg:max-w-13',
+        text: 'text-xl md:text-3xl',
       };
     }
 
     return {
-      size: 'w-8 min-w-7 max-w-8',
-      text: 'text-lg',
+      size: 'w-8 min-w-7 max-w-8 md:w-10 md:max-w-10 lg:w-11 lg:max-w-11',
+      text: 'text-lg md:text-2xl lg:text-3xl',
     };
   };
-  const gapClass = solution.length > 10 ? 'gap-[2px]' : 'gap-1';
+  const gapClass = solution.length > 10 ? 'gap-[2px] md:gap-1' : 'gap-1 md:gap-2';
   const { size, text } = getTileClasses(solution.length);
   const green = 'animate-flip-green';
   const yellow = 'animate-flip-yellow';
