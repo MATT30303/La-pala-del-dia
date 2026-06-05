@@ -11,10 +11,8 @@ export default function Wordle({
   solution,
   gamemode,
   handleGameMode,
-  description,
 }: {
   solution: string;
-  description: string | null;
   gamemode: 'normal' | 'hard' | 'easy';
   handleGameMode: (game: number) => void;
 }) {
@@ -32,7 +30,11 @@ export default function Wordle({
   const { gameState, updateGameState, loadGameState } = useGameState(gamemode);
   const [showModal, setShowModal] = useState(false);
   const hasRegistered = useRef(false);
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(min-width: 768px)').matches
+      : false,
+  );
   const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
@@ -128,7 +130,7 @@ export default function Wordle({
           <Welcome onClose={() => setShowWelcome(false)} />
         </div>
       )}
-      <div className="flex-1 w-11/12 max-h-15 lg:pt-0 xl:pt-0">
+      <div className="flex-1 w-11/12 max-w-xl max-h-15 lg:pt-0 xl:pt-0">
         <Header
           onModalOpen={() => setShowModal(true)}
           setShowMenu={setShowMenu}
@@ -155,7 +157,6 @@ export default function Wordle({
           isCorrect={isCorrect}
           turn={turn}
           solution={solution}
-          description={description}
           stats={stats}
           onClose={() => setShowModal(false)}
         />

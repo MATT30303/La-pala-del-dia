@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { VALID_GUESSES } from '../data';
 import { useGameState } from './useGameState';
 import type { GameState } from '../interfaces/types';
@@ -16,6 +16,22 @@ const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
   const usedKeys = gameState.usedKeys;
   const isCorrect = gameState.isCorrect;
   const gameCompleted = gameState.gameCompleted;
+  const gameStateRef = useRef(gameState);
+
+  useEffect(() => {
+    gameStateRef.current = gameState;
+  }, [gameState]);
+
+  const commitGameState = (
+    update: Partial<GameState> | ((prev: GameState) => Partial<GameState>),
+  ) => {
+    const prev = gameStateRef.current;
+    const changes = typeof update === 'function' ? update(prev) : update;
+    const next = { ...prev, ...changes };
+
+    gameStateRef.current = next;
+    updateGameState(next);
+  };
 
   useEffect(() => {
     if (gameState.solutionStored !== solution) {
@@ -38,9 +54,9 @@ const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
     setTimeout(() => setErrorKey(0), 300);
   };
 
-  const formatGuess = () => {
+  const formatGuess = (guessToFormat: string) => {
     const solutionArray = [...solution!];
-    const formattedGuess = [...currentGuess].map((l) => ({
+    const formattedGuess = [...guessToFormat].map((l) => ({
       key: l,
       color: 'grey' as KeyColor,
     }));
@@ -63,7 +79,7 @@ const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
   };
 
   const addNewGuess = (formattedGuess: { key: string; color: KeyColor }[]) => {
-    updateGameState((prev: GameState) => {
+    commitGameState((prev: GameState) => {
       const newGuesses = [...prev.guesses];
       newGuesses[prev.turn] = formattedGuess;
 
@@ -91,41 +107,48 @@ const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
   };
 
   const handleKeyup = ({ key }: { key: string }) => {
+    const state = gameStateRef.current;
+    const guess = state.currentGuess;
+
     if (key === 'Enter') {
-      if (turn > 5) {
+      if (state.turn > 5) {
         triggerInvalidShake();
         triggerError(2);
         return;
       }
 
-      if (history.includes(currentGuess)) {
+      if (state.history.includes(guess)) {
         triggerInvalidShake();
         triggerError(3);
         return;
       }
 
-      if (currentGuess.length !== length) {
+      if (guess.length !== length) {
         triggerInvalidShake();
         triggerError(4);
         return;
       }
 
       if (
-        currentGuess.length === 5 &&
-        !WORD_SET.has(currentGuess.toLowerCase())
+        guess.length === 5 &&
+        !WORD_SET.has(guess.toLowerCase())
       ) {
         triggerInvalidShake();
         triggerError(1);
         return;
       }
 
-      const formatted = formatGuess();
+      const formatted = formatGuess(guess);
       addNewGuess(formatted);
       return;
     }
 
+    if (state.gameCompleted || state.isCorrect || state.turn > 5) {
+      return;
+    }
+
     if (key === 'Backspace') {
-      updateGameState((prev) => ({
+      commitGameState((prev) => ({
         ...prev,
         currentGuess: prev.currentGuess.slice(0, -1),
       }));
@@ -133,8 +156,8 @@ const useWordle = (solution: string, gamemode: 'normal' | 'hard' | 'easy') => {
     }
 
     if (/^\p{L}$/u.test(key)) {
-      if (currentGuess.length < length) {
-        updateGameState((prev) => ({
+      if (guess.length < length) {
+        commitGameState((prev) => ({
           ...prev,
           currentGuess: prev.currentGuess + key.toLowerCase(),
         }));

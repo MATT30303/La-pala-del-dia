@@ -6,37 +6,22 @@ export function DefaultWordle_page() {
     solutionNormal,
     solutionHard,
     solutionEasy,
-    descriptionNormal,
-    descriptionEasy,
-    descriptionHard,
   } = useDailySolution();
   const [solution, setSolution] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
   const [gamemode, setGamemode] = useState<'normal' | 'hard' | 'easy'>(
     'normal'
   );
   useEffect(() => {
     if (gamemode === 'easy') {
       setSolution(solutionEasy);
-      setDescription(descriptionEasy);
     }
     if (gamemode === 'normal') {
       setSolution(solutionNormal);
-      setDescription(descriptionNormal);
     }
     if (gamemode === 'hard') {
       setSolution(solutionHard);
-      setDescription(descriptionHard);
     }
-  }, [
-    gamemode,
-    solutionEasy,
-    solutionHard,
-    solutionNormal,
-    descriptionNormal,
-    descriptionEasy,
-    descriptionHard,
-  ]);
+  }, [gamemode, solutionEasy, solutionHard, solutionNormal]);
 
   const handleGameMode = (game: number) => {
     const setGame: Record<number, () => void> = {
@@ -62,7 +47,6 @@ export function DefaultWordle_page() {
           <Wordle
             key={gamemode + '-' + solution}
             solution={solution}
-            description={description}
             gamemode={gamemode}
             handleGameMode={handleGameMode}
           ></Wordle>

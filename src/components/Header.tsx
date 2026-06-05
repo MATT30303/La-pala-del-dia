@@ -14,7 +14,7 @@ export default function Header({
   }
 
   return (
-    <header className="md:h-16 flex items-center justify-between gap-0 md:px-6">
+    <header className="w-full h-12 md:h-16 mx-auto flex items-center justify-between gap-4 px-1 md:px-4">
       <div onClick={MenuSwitch}>
         {showMenu ? (
           <LeftArrow className="animate-menuIcon-open cursor-pointer w-7 md:w-9 text-[rgb(162_161_160_/0.6)]" />
